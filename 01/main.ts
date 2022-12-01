@@ -18,4 +18,5 @@ for (let i = 0; i < temp.length; i++) {
 
 const totalCalories = calories.map((calorie) => calorie.reduce((a, b) => a + b, 0)).sort((a, b) => a - b);
 
+console.log(totalCalories.at(-1));
 console.log(totalCalories.at(-1)! + totalCalories.at(-2)! + totalCalories.at(-3)!);
