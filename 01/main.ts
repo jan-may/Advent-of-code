@@ -2,11 +2,7 @@
 import { readFileSync } from "fs";
 const text = readFileSync("input.txt", "utf-8");
 
-// split text into array of calories
 const temp = text.split("\n").map(Number);
-
-let max = 0;
-let maxTemp = 0;
 
 let calories: number[][] = [];
 let tempCaloriesArr: number[] = [];
