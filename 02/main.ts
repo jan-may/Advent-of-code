@@ -10,7 +10,6 @@ for (const round of rounds) {
   const ownMove = calculateOwnMove(round[0], round[2]);
   sum += gameResult(round[0], ownMove!) + ownScore(ownMove!)!;
 }
-
 console.log(sum);
 
 function gameResult(opp: string, me: string) {
