@@ -43,5 +43,4 @@ function checkCharValue(char: string) {
   if (char == char.toLowerCase()) return char.charCodeAt(0) - 96;
   return char.charCodeAt(0) - 38;
 }
-
 console.log(result1, result2);
