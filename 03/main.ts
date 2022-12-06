@@ -5,7 +5,6 @@ const file = readFileSync("input.txt", "utf-8");
 const backpacks = file.split("\n");
 
 let doubleItems = "";
-
 for (const bp of backpacks) {
   const comp1 = bp.slice(0, bp.length / 2);
   const comp2 = bp.slice(bp.length / 2, bp.length);

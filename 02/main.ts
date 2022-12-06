@@ -5,7 +5,8 @@ const rounds = file.split("\n");
 
 let sum = 0;
 for (const round of rounds) {
-  //   sum += gameResult(round[0], round[2]) + ownScore(round[2])!;
+  // first Star
+  // sum += gameResult(round[0], round[2]) + ownScore(round[2])!;
   const ownMove = calculateOwnMove(round[0], round[2]);
   sum += gameResult(round[0], ownMove!) + ownScore(ownMove!)!;
 }
