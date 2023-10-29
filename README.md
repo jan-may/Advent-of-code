@@ -8,7 +8,7 @@ This repository contains my solutions to the [Advent of Code](https://adventofco
 ## Advent of Code Years
 
 - [2023](#year-2023)
-- [2022](#year-2022) - [View Solutions](./y_2015)
+- [2022](#year-2022) - [View Solutions](./y_2015/src)
 
 ---
 
@@ -18,9 +18,9 @@ Challenges for 2023 will be added here as I solve them.
 
 ---
 
-## Year 2022
+## Year 2015
 
-- [View Solutions](./y_2015)
+- [View Solutions](./y_2015/src)
 
 ---
 
