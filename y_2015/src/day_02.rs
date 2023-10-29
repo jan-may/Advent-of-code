@@ -40,7 +40,6 @@ pub fn part_2() -> i32 {
     for word in input {
         let dimensions: Vec<i32> = word.split('x').map(|s| s.parse().unwrap()).collect();
         let present = Present::new(dimensions[0], dimensions[1], dimensions[2]);
-        let sides = present.sides();
         let bow_length = present.length * present.width * present.height;
         let mut sorted_dimensions = [present.length, present.width, present.height];
         sorted_dimensions.sort();
