@@ -8,7 +8,7 @@ struct Instruction {
 }
 
 pub fn part_1() -> i32 {
-    let mut data = parse_input("inputs/day_06.txt");
+    let data = parse_input("inputs/day_06.txt");
     let mut grid = vec![vec![false; 1000]; 1000];
 
     for line in data.iter() {
@@ -31,7 +31,7 @@ pub fn part_1() -> i32 {
 }
 
 pub fn part_2() -> i32 {
-    let mut data = parse_input("inputs/day_06.txt");
+    let data = parse_input("inputs/day_06.txt");
     let mut grid = vec![vec![0; 1000]; 1000];
 
     for line in data.iter() {
