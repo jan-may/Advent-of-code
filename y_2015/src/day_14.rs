@@ -39,7 +39,6 @@ pub fn part_1() -> i32 {
 
 pub fn part_2() -> i32 {
     let mut reindeers = generate_reindeers();
-    let mut max = 0;
     for _ in 0..2503 {
         for reindeer in reindeers.iter_mut() {
             if reindeer.fly_time_left > 0 {
