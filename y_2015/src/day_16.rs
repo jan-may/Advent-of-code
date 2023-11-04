@@ -17,7 +17,6 @@ struct Sue {
 
 pub fn part_1() -> i32 {
     let sues = generate_sues();
-    let mut result = 0;
     let filtered = sues.iter().filter(|sue| {
         sue.children.map(|val| val == 3).unwrap_or(true)
             && sue.cats.map(|val| val == 7).unwrap_or(true)
@@ -31,17 +30,15 @@ pub fn part_1() -> i32 {
             && sue.perfumes.map(|val| val == 1).unwrap_or(true)
     }).collect::<Vec<&Sue>>();
     match filtered.len() {
-        1 => result = filtered[0].sue_number,
+        1 => filtered[0].sue_number,
         _ => panic!("did not found exactly one sue"),
     }
-    result
 }
 
 
 
 pub fn part_2() -> i32 {
     let sues = generate_sues();
-    let mut result = 0;
     let filtered = sues.iter().filter(|sue| {
         sue.children.map(|val| val == 3).unwrap_or(true)
             && sue.cats.map(|val| val > 7).unwrap_or(true)
@@ -55,11 +52,9 @@ pub fn part_2() -> i32 {
             && sue.perfumes.map(|val| val == 1).unwrap_or(true)
     }).collect::<Vec<&Sue>>();
     match filtered.len() {
-        1 => result = filtered[0].sue_number,
+        1 =>  filtered[0].sue_number,
         _ => panic!("did not found exactly one sue"),
     }
-    result
-
 }
 
 fn generate_sues() -> Vec<Sue> {
