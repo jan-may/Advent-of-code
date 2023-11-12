@@ -25,8 +25,8 @@ pub fn part_2() -> i32 {
         }
         for j in 0..3 {
             let mut triangle = Vec::new();
-            for k in 0..3 {
-                triangle.push(sides[k][j]);
+            for item in sides.iter().take(3) {
+                triangle.push(item[j]);
             }
             triangle.sort();
             if triangle[0] + triangle[1] > triangle[2] {
@@ -36,7 +36,3 @@ pub fn part_2() -> i32 {
     }
     count
 }
-
-
-
-
