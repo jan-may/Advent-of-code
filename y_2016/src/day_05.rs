@@ -1,5 +1,4 @@
 use crate::lib::parse_input;
-use md5;
 
 pub fn part_1() -> String {
     let input = parse_input("inputs/day_05.txt")[0].clone();
