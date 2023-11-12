@@ -42,10 +42,10 @@ pub fn part_2() -> String {
     for line in &input {
         for val in line.split("") {
             match val {
-                "U" => if position.0 > 0 && NUMPAD[position.0 - 1][position.1] != "" { position.0 -= 1 },
-                "D" => if position.0 < 4 && NUMPAD[position.0 + 1][position.1] != "" { position.0 += 1 },
-                "L" => if position.1 > 0 && NUMPAD[position.0][position.1 - 1] != "" { position.1 -= 1 },
-                "R" => if position.1 < 4 && NUMPAD[position.0][position.1 + 1] != "" { position.1 += 1 },
+                "U" => if position.0 > 0 && !NUMPAD[position.0 - 1][position.1].is_empty() { position.0 -= 1 },
+                "D" => if position.0 < 4 && !NUMPAD[position.0 + 1][position.1].is_empty() { position.0 += 1 },
+                "L" => if position.1 > 0 && !NUMPAD[position.0][position.1 - 1].is_empty() { position.1 -= 1 },
+                "R" => if position.1 < 4 && !NUMPAD[position.0][position.1 + 1].is_empty() { position.1 += 1 },
                 _ => ()
             }
         }
