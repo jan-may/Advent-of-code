@@ -1,12 +1,5 @@
 use crate::lib::parse_input;
 
-enum Direction {
-    Right,
-    Up,
-    Left,
-    Down
-}
-
 pub fn part_1() -> i32 {
     let input = parse_input("inputs/day_04.txt");
     let mut valid_passphrases = 0;
