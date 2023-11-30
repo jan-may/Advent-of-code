@@ -13,8 +13,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: k2bd/advent-readme-stars@v1
         with:
-          userId: ${{ secrets.userId }}
-          leaderboardId: ${{ secrets.leaderboardId }}
+          userId: 1356574
+          leaderboardId: 0e85eedb
           sessionCookie: ${{ secrets.AOC_SESSION }}
           year: 2015
           readmeLocation: y_2015/README.md
