@@ -17,6 +17,12 @@ jobs:
           sessionCookie: ${{ secrets.AOC_SESSION }}
           year: 2015
           readmeLocation: y_2015/README.md
+      - uses: k2bd/advent-readme-stars@v1
+        with:
+          userId: 1356574
+          sessionCookie: ${{ secrets.AOC_SESSION }}
+          year: 2016
+          readmeLocation: y_2016/README.md
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update README stars
