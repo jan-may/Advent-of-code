@@ -7,7 +7,7 @@ This repository contains my solutions to the [Advent of Code](https://adventofco
 
 ## Advent of Code Years
 
-- [2023](#year-2023)
+- [2023](#year-2023) - [View Solutions](./y_2023/src)
 - [2017](#year-2017) - [View Solutions](./y_2017/src)
 - [2016](#year-2016) - [View Solutions](./y_2016/src)
 - [2015](#year-2015) - [View Solutions](./y_2015/src)
@@ -16,6 +16,7 @@ This repository contains my solutions to the [Advent of Code](https://adventofco
 ## Year 2023
 
 Challenges for 2023 will be added here as I solve them.
+<!--- advent_readme_stars table --->
 
 ---
 

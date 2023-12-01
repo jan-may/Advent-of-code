@@ -11,15 +11,26 @@ jobs:
       contents: write
     strategy:
       matrix:
-        year: [2015, 2016, 2017]
+        include:
+          - year: 2015
+            readmeLocation: y_2015/README.md
+          - year: 2016
+            readmeLocation: y_2016/README.md
+          - year: 2017
+            readmeLocation: y_2017/README.md
+          - year: 2023
+            readmeLocation: y_2023/README.md
+          - year: 2023
+            readmeLocation: README.md
     steps:
       - uses: actions/checkout@v2
-      - uses: k2bd/advent-readme-stars@v1
+      - name: Update README for ${{ matrix.year }}
+        uses: k2bd/advent-readme-stars@v1
         with:
           userId: 1356574
           sessionCookie: ${{ secrets.AOC_SESSION }}
           year: ${{ matrix.year }}
-          readmeLocation: y_${{ matrix.year }}/README.md
+          readmeLocation: ${{ matrix.readmeLocation }}
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update README stars
