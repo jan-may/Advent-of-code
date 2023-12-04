@@ -23,6 +23,8 @@ Challenges for 2023 will be added here as I solve them.
 | :---: | :---: | :---: |
 | [Day 1](https://adventofcode.com/2023/day/1) | ⭐ | ⭐ |
 | [Day 2](https://adventofcode.com/2023/day/2) | ⭐ | ⭐ |
+| [Day 3](https://adventofcode.com/2023/day/3) | ⭐ | ⭐ |
+| [Day 4](https://adventofcode.com/2023/day/4) | ⭐ | ⭐ |
 <!--- advent_readme_stars table --->
 
 ---
