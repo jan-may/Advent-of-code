@@ -18,7 +18,6 @@ pub fn part_1() -> i32 {
     result
 }
 
-
 pub fn part_2() -> i32 {
     let input = parse_input("inputs/day_01.txt");
     let mut result = 0;

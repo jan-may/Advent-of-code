@@ -137,13 +137,16 @@ fn extract_numbers(grid: &[Vec<char>]) -> Vec<Vec<(i32, (usize, usize))>> {
         .collect()
 }
 fn extract_indices(grid: &[Vec<char>], part2: bool) -> HashSet<(usize, usize)> {
-    grid.iter().enumerate().flat_map(|(row_index, row)| {
-        row.iter().enumerate().filter_map(move |(col_index, &ch)| {
-            match (part2, is_symbol(ch)) {
-                (true, true) => Some((row_index, col_index)),
-                (false, true) => Some((row_index, col_index)),
-                _ => None,
-            }
+    grid.iter()
+        .enumerate()
+        .flat_map(|(row_index, row)| {
+            row.iter().enumerate().filter_map(move |(col_index, &ch)| {
+                match (part2, is_symbol(ch)) {
+                    (true, true) => Some((row_index, col_index)),
+                    (false, true) => Some((row_index, col_index)),
+                    _ => None,
+                }
+            })
         })
-    }).collect()
+        .collect()
 }

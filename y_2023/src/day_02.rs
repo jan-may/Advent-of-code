@@ -7,8 +7,6 @@ struct Game {
     blue: i32,
 }
 
-
-
 impl Game {
     const MAX_RED: i32 = 12;
     const MAX_GREEN: i32 = 13;
