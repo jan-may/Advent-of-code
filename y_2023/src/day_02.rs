@@ -1,20 +1,13 @@
 use crate::lib::parse_input;
 
+#[derive(Default)]
 struct Game {
     red: i32,
     green: i32,
     blue: i32,
 }
 
-impl Default for Game {
-    fn default() -> Self {
-        Self {
-            red: 0,
-            green: 0,
-            blue: 0,
-        }
-    }
-}
+
 
 impl Game {
     const MAX_RED: i32 = 12;
@@ -51,11 +44,11 @@ pub fn part_2() -> i32 {
 fn parse_line(line: String) -> (i32, Vec<Game>) {
     let mut rounds: Vec<Game> = vec![];
     let line = line
-        .replace(":", "")
+        .replace(':', "")
         .replace("Game ", "")
-        .replace(";", " ;")
-        .replace(",", "");
-    let mut line = line.split(" ");
+        .replace(';', " ;")
+        .replace(',', "");
+    let mut line = line.split(' ');
     let id = line.next().unwrap().parse::<i32>().unwrap();
     let mut game = Game::default();
     let mut val = 0;
