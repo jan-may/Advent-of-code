@@ -1,6 +1,7 @@
 use crate::lib::parse_input;
 use std::ops::{Sub, Add};
 use std::fmt::Debug;
+use rayon::prelude::*;
 
 #[derive(Default, Debug, Clone)]
 struct Mapping {
@@ -62,12 +63,12 @@ pub fn part_2() -> i64 {
         }
     }
 
-    let mut smallest_location = i64::MAX;
-
-    for seed_range in seeds.iter(){
-        let mut seed :Seed;
+    // each thread computes its own part of the seeds and returns the smallest location
+    // after all threads have finished their work the smallest location is returned
+    let locations: Vec<i64> = seeds.par_iter().map(|seed_range| {
+        let mut local_smallest_location = i64::MAX;
         for i in seed_range.0..=seed_range.1 {
-                seed = Seed { value: i, ..Default::default() };
+            let mut seed = Seed { value: i, ..Default::default() };
                 calculate_seed_mapping(&mappings, &mut seed, "seed-to-soil map", |seed| seed.value, |seed, value| seed.soil = value);
                 calculate_seed_mapping(&mappings, &mut seed, "soil-to-fertilizer map", |seed| seed.soil, |seed, value| seed.fertilizer = value);
                 calculate_seed_mapping(&mappings, &mut seed, "fertilizer-to-water map", |seed| seed.fertilizer, |seed, value| seed.water = value);
@@ -75,13 +76,14 @@ pub fn part_2() -> i64 {
                 calculate_seed_mapping(&mappings, &mut seed, "light-to-temperature map", |seed| seed.light, |seed, value| seed.temperature = value);
                 calculate_seed_mapping(&mappings, &mut seed, "temperature-to-humidity map", |seed| seed.temperature, |seed, value| seed.humidity = value);
                 calculate_seed_mapping(&mappings, &mut seed, "humidity-to-location map", |seed| seed.humidity, |seed, value| seed.location = value);
-                if seed.location < smallest_location {
-                    smallest_location = seed.location;
-                }
+            if seed.location < local_smallest_location {
+                local_smallest_location = seed.location;
             }
-        println!("seed range: {:?} - smallest location: {}", seed_range, smallest_location); // to see progress
         }
-    smallest_location
+        local_smallest_location
+    }).collect();
+
+    *locations.iter().min().unwrap_or(&i64::MAX)
 }
 
 
