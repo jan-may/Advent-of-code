@@ -11,6 +11,7 @@ mod day_06;
 mod day_07;
 mod day_08;
 mod day_09;
+mod day_10;
 
 mod lib;
 
@@ -23,6 +24,7 @@ fn main() {
     // println!("day 6: p1 {} | p2 {}", day_06::part_1(), day_06::part_2());
     // println!("day 7: p1 {} | p2 {}", day_07::part_1(), day_07::part_2());
     // println!("day 8: p1 {} | p2 {}", day_08::part_1(), day_08::part_2());
-    println!("day 9: p1 {} | p2 {}", day_09::part_1(), day_09::part_2());
+    // println!("day 9: p1 {} | p2 {}", day_09::part_1(), day_09::part_2());
+    println!("day 10: p1 {} | p2 {}", day_10::part_1(), day_10::part_2());
 }
 
