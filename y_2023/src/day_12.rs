@@ -1,81 +1,81 @@
 use crate::lib::parse_input;
+use std::collections::HashMap;
 
-pub fn part_1() -> i32 {
-    let input = parse_input("inputs/day_12.txt");
-    let mut count = 0;
-    for row in input {
-        let parts = row.split(' ').collect::<Vec<&str>>();
-        let mut springs = parts[0].chars().collect::<Vec<char>>();
-        let mut indices = vec![];
-        for (i, c) in springs.iter().enumerate() {
-            if *c == '#' {
-                indices.push(i);
+pub fn part_1() -> usize {
+    let input = parse_and_prepare_input("inputs/day_12.txt", 1, "");
+    input.into_iter()
+        .map(|(vents, nums)| possible_ways(&mut HashMap::new(), &vents, None, &nums))
+        .sum()
+}
+
+pub fn part_2() -> usize {
+    let input = parse_and_prepare_input("inputs/day_12.txt", 5, "?");
+    input.into_iter()
+        .map(|(vents, nums)| possible_ways(&mut HashMap::new(), &vents, None, &nums.repeat(5)))
+        .sum()
+}
+
+fn parse_and_prepare_input(file_path: &str, repeat_factor: usize, separator: &str) -> Vec<(Vec<u8>, Vec<usize>)> {
+    parse_input(file_path)
+        .into_iter()
+        .map(|line| {
+            let (vents, rest) = line.split_once(' ').expect("Invalid input format");
+            let nums = rest.split(',')
+                .map(|w| w.parse::<usize>().expect("Invalid number"))
+                .collect::<Vec<_>>();
+            let new_vents = if repeat_factor > 1 {
+                (0..repeat_factor).map(|_| vents).collect::<Vec<_>>().join(separator)
+            } else {
+                vents.to_string()
+            };
+
+            (new_vents.into_bytes(), nums)
+        })
+        .collect()
+}
+
+// stolen from @https://github.com/AxlLind
+// couldn't figure out how to use the cache properly :(
+fn possible_ways(
+    cache: &mut HashMap<(usize, usize, usize), usize>,
+    s: &[u8],
+    within: Option<usize>,
+    remaining: &[usize],
+) -> usize {
+    if s.is_empty() {
+        return match (within, remaining.len()) {
+            (None, 0) => 1,
+            (Some(x), 1) if x == remaining[0] => 1,
+            _ => 0,
+        };
+    }
+    if within.is_some() && remaining.is_empty() {
+        return 0;
+    }
+
+    let key = (s.len(), within.unwrap_or(0), remaining.len());
+    if let Some(&x) = cache.get(&key) {
+        return x;
+    }
+
+    let ways = match (s[0], within) {
+        (b'.', Some(x)) if x != remaining[0] => 0,
+        (b'.', Some(_)) => possible_ways(cache, &s[1..], None, &remaining[1..]),
+        (b'.', None) => possible_ways(cache, &s[1..], None, remaining),
+        (b'#', Some(_)) => possible_ways(cache, &s[1..], within.map(|x| x + 1), remaining),
+        (b'#', None) => possible_ways(cache, &s[1..], Some(1), remaining),
+        (b'?', Some(x)) => {
+            let mut ans = possible_ways(cache, &s[1..], within.map(|x| x + 1), remaining);
+            if x == remaining[0] {
+                ans += possible_ways(cache, &s[1..], None, &remaining[1..])
             }
+            ans
         }
-        let damaged_groups = parts[1].split(',')
-            .map(|x| x.parse::<i32>().unwrap())
-            .collect::<Vec<i32>>();
-        count += find_combinations(&mut springs, &damaged_groups);
-    }
-    count
-}
-
-pub fn part_2() -> i32 {
-    0
-}
-
-
-fn generate_and_validate(spring: &mut Vec<char>, groups: &Vec<i32>, index: usize, count: &mut i32) {
-    if index == spring.len() {
-        if is_valid(spring, groups) {
-            *count += 1;
+        (b'?', None) => {
+            possible_ways(cache, &s[1..], Some(1), remaining) + possible_ways(cache, &s[1..], None, remaining)
         }
-        return;
-    }
-
-    if !grouping_still_possible(spring, groups, index) {
-        return;
-    }
-
-    if spring[index] == '?' {
-        // Try with '.'
-        spring[index] = '.';
-        generate_and_validate(spring, groups, index + 1, count);
-        spring[index] = '#';
-        generate_and_validate(spring, groups, index + 1, count);
-
-        // Reset to '?'
-        spring[index] = '?';
-    } else {
-        generate_and_validate(spring, groups, index + 1, count);
-    }
-}
-
-fn find_combinations(springs: &mut Vec<char>, groups: &Vec<i32>) -> i32 {
-    let mut count = 0;
-    generate_and_validate(springs, groups, 0, &mut count);
-    count
-}
-
-fn grouping_still_possible(_spring: &[char], _groups: &[i32], _index: usize) -> bool {
-    // still needs to be implemented
-    true
-}
-
-fn is_valid(spring: &[char], groups: &Vec<i32>) -> bool {
-    let mut group_counts = Vec::new();
-    let mut current_count = 0;
-
-    for &c in spring {
-        if c == '#' {
-            current_count += 1;
-        } else if current_count > 0 {
-            group_counts.push(current_count);
-            current_count = 0;
-        }
-    }
-    if current_count > 0 {
-        group_counts.push(current_count);
-    }
-    group_counts == *groups
+        _ => unreachable!(),
+    };
+    cache.insert(key, ways);
+    ways
 }

@@ -29,7 +29,5 @@ fn main() {
     // println!("day 9: p1 {} | p2 {}", day_09::part_1(), day_09::part_2());
     // println!("day 10: p1 {} | p2 {}", day_10::part_1(), day_10::part_2());
     // println!("day 11: p1 {} | p2 {}", day_11::part_1(), day_11::part_2());
-    let time = std::time::Instant::now();
     println!("day 12: p1 {} | p2 {}", day_12::part_1(), day_12::part_2());
-    println!("time: {:?}", time.elapsed());
 }
