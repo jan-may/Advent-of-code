@@ -21,7 +21,7 @@ impl Beam {
     fn new(position: (usize,usize), direction: Direction) -> Beam {
         Beam { position, direction }
     }
-    fn move_beam(beam: &mut Beam, queue: &mut Vec<Beam>, grid: &[Vec<char>]) {
+    fn move_beam(beam: Beam, queue: &mut Vec<Beam>, grid: &[Vec<char>]) {
         let (x,y) = beam.position;
         let (width, height) = (grid[0].len(), grid.len());
         let new_pos = match beam.direction {
@@ -132,11 +132,13 @@ fn calc_energy_level(grid: &[Vec<char>], first_beam: Beam) -> usize {
     let mut energized = grid.to_owned();
     let mut queue = vec![first_beam];
     while !queue.is_empty() {
-        let mut beam = queue.remove(0);
+        // cant get this to work for mutating first element of queue in place
+        // so we remove it and add it back in... still fast enough.
+        let beam = queue.remove(0);
             if visited.contains(&beam) { continue; }
             energized[beam.position.1][beam.position.0] = 'X';
             visited.insert(beam);
-            Beam::move_beam(&mut beam, &mut queue, grid);
+            Beam::move_beam(beam, &mut queue, grid);
     }
     energized.iter().map(|line| line.iter().filter(|c| **c == 'X').count()).sum()
 }
