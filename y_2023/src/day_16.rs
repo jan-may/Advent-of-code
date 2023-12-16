@@ -1,5 +1,7 @@
 use std::collections::{HashSet};
 use crate::lib::parse_input;
+use rayon::prelude::*;
+
 
 #[derive(Debug,PartialEq,Eq,Hash,Clone,Copy)]
 enum Direction {
@@ -19,94 +21,66 @@ impl Beam {
     fn new(position: (usize,usize), direction: Direction) -> Beam {
         Beam { position, direction }
     }
-    fn move_beam(beam: &Beam, grid: &[Vec<char>]) -> Option<Vec<Beam>> {
-        let mut new_beams = Vec::new();
+    fn move_beam(beam: &mut Beam, queue: &mut Vec<Beam>, grid: &[Vec<char>]) {
         let (x,y) = beam.position;
         let (width, height) = (grid[0].len(), grid.len());
-
         let new_pos = match beam.direction {
-            Direction::Up if y > 0 => (x, y - 1),
-            Direction::Down if y < height - 1 => (x, y + 1),
-            Direction::Left if x > 0 => (x - 1, y),
-            Direction::Right if x < width - 1 => (x + 1, y),
-            _ => return None
+            Direction::Up if y > 0 => Some((x, y - 1)),
+            Direction::Down if y < height - 1 => Some((x, y + 1)),
+            Direction::Left if x > 0 => Some((x - 1, y)),
+            Direction::Right if x < width - 1 => Some((x + 1, y)),
+            _ => None
         };
-
+        if new_pos.is_none() { return; }
+        let new_pos = new_pos.unwrap();
         match beam.direction {
             Direction::Up => {
                 match grid[y - 1][x] {
                     '|' | '.' => {
-                        new_beams.push(Beam::new(new_pos, Direction::Up));
-                    }
-                    '\\' => new_beams.push(Beam::new(new_pos, Direction::Left)),
-                    '/' => new_beams.push(Beam::new(new_pos, Direction::Right)),
+                        queue.push(Beam::new(new_pos, Direction::Up)); }
+                    '\\' => queue.push(Beam::new(new_pos, Direction::Left)),
+                    '/' => queue.push(Beam::new(new_pos, Direction::Right)),
                     '-' => {
-                        if x > 0 {
-                            new_beams.push(Beam::new(new_pos, Direction::Left))
-                        }
-                        if x < width - 1 {
-                            new_beams.push(Beam::new(new_pos, Direction::Right));
-                        }
+                        queue.push(Beam::new(new_pos, Direction::Left));
+                        queue.push(Beam::new(new_pos, Direction::Right));
                     },
-                    _ => return None
+                    _ => {}
                 }
             },
             Direction::Down => {
                 match grid[y + 1][x] {
-                    '|' | '.' => {
-                        new_beams.push(Beam::new(new_pos, Direction::Down));
-                    }
-                    '\\' => new_beams.push(Beam::new(new_pos, Direction::Right)),
-                    '/' => new_beams.push(Beam::new(new_pos, Direction::Left)),
+                    '\\' => queue.push(Beam::new(new_pos, Direction::Right)),
+                    '/' => queue.push(Beam::new(new_pos, Direction::Left)),
                     '-' => {
-                        if x > 0 {
-                            new_beams.push(Beam::new(new_pos, Direction::Left))
-                        }
-                        if x < width - 1 {
-                            new_beams.push(Beam::new(new_pos, Direction::Right));
-                        }
+                        queue.push(Beam::new(new_pos, Direction::Left));
+                        queue.push(Beam::new(new_pos, Direction::Right));
                     },
-                    _ => return None
+                    _ => queue.push(Beam::new(new_pos, Direction::Down))
                 }
             },
             Direction::Left => {
                 match grid[y][x - 1] {
-                    '-' | '.' => {
-                        new_beams.push(Beam::new(new_pos, Direction::Left));
-                    }
-                    '\\' => new_beams.push(Beam::new(new_pos, Direction::Up)),
-                    '/' => new_beams.push(Beam::new(new_pos, Direction::Down)),
+                    '\\' => queue.push(Beam::new(new_pos, Direction::Up)),
+                    '/' => queue.push(Beam::new(new_pos, Direction::Down)),
                     '|' => {
-                        if y > 0 {
-                            new_beams.push(Beam::new(new_pos, Direction::Up))
-                        }
-                        if y < height - 1 {
-                            new_beams.push(Beam::new(new_pos, Direction::Down));
-                        }
+                        queue.push(Beam::new(new_pos, Direction::Up));
+                        queue.push(Beam::new(new_pos, Direction::Down));
                     },
-                    _ => return None
+                    _ => queue.push(Beam::new(new_pos, Direction::Left))
                 }
             },
             Direction::Right => {
                 match grid[y][x + 1] {
-                    '-' | '.' => {
-                        new_beams.push(Beam::new(new_pos, Direction::Right));
-                    }
-                    '\\' => new_beams.push(Beam::new(new_pos, Direction::Down)),
-                    '/' => new_beams.push(Beam::new(new_pos, Direction::Up)),
+                    '\\' => queue.push(Beam::new(new_pos, Direction::Down)),
+                    '/' => queue.push(Beam::new(new_pos, Direction::Up)),
                     '|' => {
-                        if y > 0 {
-                            new_beams.push(Beam::new(new_pos, Direction::Up))
-                        }
-                        if y < height - 1 {
-                            new_beams.push(Beam::new(new_pos, Direction::Down));
-                        }
+                        queue.push(Beam::new(new_pos, Direction::Up));
+                        queue.push(Beam::new(new_pos, Direction::Down));
                     },
-                    _ => return None
+                    _ => queue.push(Beam::new(new_pos, Direction::Right))
                 }
-            },
+            }
         }
-        Some(new_beams)
     }
 }
 
@@ -123,23 +97,27 @@ pub fn part_1() -> usize {
 
 pub fn part_2() -> usize {
     let grid = generate_grid();
-    let mut result = 0;
+    let max_energy_top_and_bottom = (0..grid[0].len())
+        .into_par_iter()
+        .map(|x| {
+            let beam_top = Beam::new((x, 0), Direction::Down);
+            let beam_bottom = Beam::new((x, grid.len() - 1), Direction::Up);
+            calc_energy_level(&grid, beam_top).max(calc_energy_level(&grid, beam_bottom))
+        })
+        .max()
+        .unwrap_or(0);
 
-    // every tile in top and bottom row
-    for x in 0..grid[0].len() {
-        let beam_top = Beam::new((x, 0), Direction::Down);
-        let bem_bottom = Beam::new((x, grid.len() - 1), Direction::Up);
-        result = result.max(calc_energy_level(&grid, beam_top)).max(calc_energy_level(&grid, bem_bottom));
-    }
+    let max_energy_left_and_right = (0..grid.len())
+        .into_par_iter()
+        .map(|y| {
+            let beam_left = Beam::new((0, y), Direction::Right);
+            let beam_right = Beam::new((grid[0].len() - 1, y), Direction::Left);
+            calc_energy_level(&grid, beam_left).max(calc_energy_level(&grid, beam_right))
+        })
+        .max()
+        .unwrap_or(0);
 
-    // every tile in left and right column
-    for y in 0..grid.len() {
-        let beam_left = Beam::new((0, y), Direction::Right);
-        let beam_right = Beam::new((grid[0].len() - 1, y), Direction::Left);
-        result = result.max(calc_energy_level(&grid, beam_left)).max(calc_energy_level(&grid, beam_right));
-    }
-
-    result
+    max_energy_top_and_bottom.max(max_energy_left_and_right)
 }
 
 fn generate_grid() -> Vec<Vec<char>> {
@@ -152,17 +130,13 @@ fn generate_grid() -> Vec<Vec<char>> {
 fn calc_energy_level(grid: &[Vec<char>], first_beam: Beam) -> usize {
     let mut visited: HashSet<Beam> = HashSet::new();
     let mut energized = grid.to_owned();
-    let mut beams = vec![first_beam];
-    while !beams.is_empty() {
-        let mut new_beams: Vec<Vec<Beam>> = Vec::new();
-        for beam in beams {
+    let mut queue = vec![first_beam];
+    while !queue.is_empty() {
+        let mut beam = queue.remove(0);
             if visited.contains(&beam) { continue; }
             energized[beam.position.1][beam.position.0] = 'X';
             visited.insert(beam);
-            let new_beam = Beam::move_beam(&beam, grid);
-            new_beams.push(new_beam.unwrap_or_default());
-        }
-        beams = new_beams.into_iter().flatten().collect();
+            Beam::move_beam(&mut beam, &mut queue, grid);
     }
     energized.iter().map(|line| line.iter().filter(|c| **c == 'X').count()).sum()
 }
