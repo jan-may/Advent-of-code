@@ -21,7 +21,7 @@ Challenges for 2024 will be added here as I solve them.
 
 <!--- advent_readme_stars table --->
 
-## 2023 Results
+## 2024 Results
 
 |                      Day                       | Part 1 | Part 2 |
 | :--------------------------------------------: | :----: | :----: |
