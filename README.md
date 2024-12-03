@@ -7,36 +7,41 @@ This repository contains my solutions to the [Advent of Code](https://adventofco
 
 ## Advent of Code Years
 
+- [2024](#year-2024) - [View Solutions](./y_2024/src)
 - [2023](#year-2023) - [View Solutions](./y_2023/src)
 - [2017](#year-2017) - [View Solutions](./y_2017/src)
 - [2016](#year-2016) - [View Solutions](./y_2016/src)
 - [2015](#year-2015) - [View Solutions](./y_2015/src)
+
 ---
 
-## Year 2023
+## Year 2024
 
-Challenges for 2023 will be added here as I solve them.
+Challenges for 2024 will be added here as I solve them.
+
 <!--- advent_readme_stars table --->
+
 ## 2023 Results
 
-| Day | Part 1 | Part 2 |
-| :---: | :---: | :---: |
-| [Day 1](https://adventofcode.com/2023/day/1) | ⭐ | ⭐ |
-| [Day 2](https://adventofcode.com/2023/day/2) | ⭐ | ⭐ |
-| [Day 3](https://adventofcode.com/2023/day/3) | ⭐ | ⭐ |
-| [Day 4](https://adventofcode.com/2023/day/4) | ⭐ | ⭐ |
-| [Day 5](https://adventofcode.com/2023/day/5) | ⭐ | ⭐ |
-| [Day 6](https://adventofcode.com/2023/day/6) | ⭐ | ⭐ |
-| [Day 7](https://adventofcode.com/2023/day/7) | ⭐ | ⭐ |
-| [Day 8](https://adventofcode.com/2023/day/8) | ⭐ | ⭐ |
-| [Day 9](https://adventofcode.com/2023/day/9) | ⭐ | ⭐ |
-| [Day 10](https://adventofcode.com/2023/day/10) | ⭐ | ⭐ |
-| [Day 11](https://adventofcode.com/2023/day/11) | ⭐ | ⭐ |
-| [Day 12](https://adventofcode.com/2023/day/12) | ⭐ | ⭐ |
-| [Day 13](https://adventofcode.com/2023/day/13) | ⭐ | ⭐ |
-| [Day 14](https://adventofcode.com/2023/day/14) | ⭐ | ⭐ |
-| [Day 15](https://adventofcode.com/2023/day/15) | ⭐ | ⭐ |
-| [Day 16](https://adventofcode.com/2023/day/16) | ⭐ | ⭐ |
+|                      Day                       | Part 1 | Part 2 |
+| :--------------------------------------------: | :----: | :----: |
+|  [Day 1](https://adventofcode.com/2023/day/1)  |   ⭐   |   ⭐   |
+|  [Day 2](https://adventofcode.com/2023/day/2)  |   ⭐   |   ⭐   |
+|  [Day 3](https://adventofcode.com/2023/day/3)  |   ⭐   |   ⭐   |
+|  [Day 4](https://adventofcode.com/2023/day/4)  |   ⭐   |   ⭐   |
+|  [Day 5](https://adventofcode.com/2023/day/5)  |   ⭐   |   ⭐   |
+|  [Day 6](https://adventofcode.com/2023/day/6)  |   ⭐   |   ⭐   |
+|  [Day 7](https://adventofcode.com/2023/day/7)  |   ⭐   |   ⭐   |
+|  [Day 8](https://adventofcode.com/2023/day/8)  |   ⭐   |   ⭐   |
+|  [Day 9](https://adventofcode.com/2023/day/9)  |   ⭐   |   ⭐   |
+| [Day 10](https://adventofcode.com/2023/day/10) |   ⭐   |   ⭐   |
+| [Day 11](https://adventofcode.com/2023/day/11) |   ⭐   |   ⭐   |
+| [Day 12](https://adventofcode.com/2023/day/12) |   ⭐   |   ⭐   |
+| [Day 13](https://adventofcode.com/2023/day/13) |   ⭐   |   ⭐   |
+| [Day 14](https://adventofcode.com/2023/day/14) |   ⭐   |   ⭐   |
+| [Day 15](https://adventofcode.com/2023/day/15) |   ⭐   |   ⭐   |
+| [Day 16](https://adventofcode.com/2023/day/16) |   ⭐   |   ⭐   |
+
 <!--- advent_readme_stars table --->
 
 ---

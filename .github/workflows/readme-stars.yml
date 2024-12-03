@@ -1,7 +1,7 @@
 name: Update README ⭐
 on:
   schedule:
-    - cron: "51 */4 * * *"  # Every 4 hours
+    - cron: "51 */4 * * *" # Every 4 hours
   workflow_dispatch:
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
             readmeLocation: y_2017/README.md
           - year: 2023
             readmeLocation: y_2023/README.md
-          - year: 2023
+          - year: 2024
             readmeLocation: README.md
     steps:
       - uses: actions/checkout@v2
